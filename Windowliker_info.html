@@ -1,0 +1,127 @@
+<html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<head>
+</head>
+<body>
+<h1>SeitenGrößenTester mit sehr langen Text in H1</h1>
+<table border="0">
+	<tr>
+		<td>Höhe:</td>
+		<td id="MyHeight" />
+	</tr>
+	<tr>
+		<td>Breite:</td>
+		<td id="MyWith" />
+	</tr>
+	<tr>
+		<td>Format:</td>
+		<td id="format" />
+	</tr>
+	<tr>
+		<td>OS:</td>
+		<td id="OS" />
+	</tr>
+	<tr>
+		<td>isTouchDevice:</td>
+		<td id="isTouchDevice" />
+	</tr>
+	<tr>
+		<td>Browser:</td>
+		<td id="browser" />
+	</tr>
+	<tr>
+		<td>userAgent:</td>
+		<td id="userAgent" />
+	</tr>
+</table>
+<script type="text/javascript">
+function BaseWindow(){
+    /*********************************************************/
+	function height(){
+		return window.innerHeight;
+	}
+	/*********************************************************/
+	function width(){
+		return window.innerWidth;
+	}
+	/*********************************************************/
+	function format(){
+		var WindowHeight = height(), WindowWidth = width();
+		if (WindowHeight >WindowWidth){
+			return "portrait";
+		}else if (WindowHeight < WindowWidth){
+			return "landscape";	
+		}else {
+			return "square";
+		}
+	}
+	/*********************************************************/
+	function clientOS(){
+		var userAgent = navigator.userAgent.toLowerCase();
+		var returnVal = false;
+		if(userAgent.match('android')){
+			returnVal = 'android';
+		}else if (userAgent.match('windows')){
+			returnVal = 'windows';
+		}else if (userAgent.match('mac os')){
+			returnVal = 'macos';
+		}else if (userAgent.match('linux')){
+			returnVal = 'linux';
+		}
+		return returnVal;
+	}
+		/*********************************************************/
+	function clientBrowser(){
+		var userAgent = navigator.userAgent.toLowerCase();
+		var returnVal = false;
+		if(userAgent.match('firefox')){
+			returnVal = 'firefox';
+		}else if (userAgent.match('chrome')){
+			returnVal = 'chrome';
+		}else if (userAgent.match('opera')){
+			returnVal = 'opera';
+		}else if (userAgent.match(/mac os.*safari/)){
+				returnVal = 'safari';
+		}else if (userAgent.match('MSIE')){
+			returnVal = 'explorer';
+		}
+		return returnVal;
+	}
+	/*********************************************************/
+	function isTouchDevice(){
+		return (typeof(document.ontouchstart) != 'undefined');
+	}
+	/*********************************************************/
+	function executeCalculations(){
+	}
+	/*********************************************************/
+	function executeDrawings (){
+		document.querySelector("#MyHeight").innerHTML = height();
+		document.querySelector("#MyWith").innerHTML = width();
+		document.querySelector("#format").innerHTML = format();
+		document.querySelector("#OS").innerHTML = clientOS();
+		document.querySelector("#isTouchDevice").innerHTML = isTouchDevice();
+		document.querySelector("#browser").innerHTML = clientBrowser();
+		document.querySelector("#userAgent").innerHTML = navigator.userAgent;
+	}
+	/*********************************************************/
+	function load (){
+		executeCalculations();
+		executeDrawings();
+	}
+	/*********************************************************/
+	this.reload = function (){
+		load();
+	}
+	/*********************************************************/
+	this.init = function (){
+		load();
+	}
+}
+var MyBaseWindow = new BaseWindow();
+window.onresize = MyBaseWindow.reload;
+window.onload = MyBaseWindow.init;
+</script>
+</body>
+</html>
+
